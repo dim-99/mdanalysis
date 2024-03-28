@@ -1205,6 +1205,7 @@ class PDBWriter(base.WriterBase):
             return chainids
 
         chainids = validate_chainids(chainids, "X")
+	print(chainids)
 
         # If reindex == False, we use the atom ids for the serial. We do not
         # want to use a fallback here.
@@ -1321,7 +1322,15 @@ class PDBWriter(base.WriterBase):
             self.pdbfile.write(self.fmt['END'])
         self.has_END = True
 
-    def ENDMDL(self):
+	def TER(self):
+	"""Write the ENDMDL_ record.
+
+	"""
+	self.pdbfile.write(self.fmt['TER'])
+    
+
+
+	def ENDMDL(self):
         """Write the ENDMDL_ record.
 
         """
