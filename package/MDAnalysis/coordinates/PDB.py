@@ -1321,11 +1321,9 @@ class PDBWriter(base.WriterBase):
             # only write a single END record
             self.pdbfile.write(self.fmt['END'])
         self.has_END = True
-
 	def TER(self):
 	"""Write the ENDMDL_ record.
-
-	"""
+ 	"""
 	self.pdbfile.write(self.fmt['TER'])
     
 
