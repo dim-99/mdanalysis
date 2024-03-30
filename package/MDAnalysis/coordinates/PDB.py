@@ -1205,7 +1205,7 @@ class PDBWriter(base.WriterBase):
             return chainids
 
         chainids = validate_chainids(chainids, "X")
-	print(chainids)
+        print(chainids)
 
         # If reindex == False, we use the atom ids for the serial. We do not
         # want to use a fallback here.
