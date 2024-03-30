@@ -1243,6 +1243,8 @@ class PDBWriter(base.WriterBase):
                 errmsg = (f"Found {record_types[i]} for the record type, but "
                           f"only allowed types are ATOM or HETATM")
                 raise ValueError(errmsg) from None
+            if vals['chainID'] != chainids[i-1]:
+                self.TER()
 
         if multiframe:
             self.ENDMDL()
@@ -1321,17 +1323,15 @@ class PDBWriter(base.WriterBase):
             # only write a single END record
             self.pdbfile.write(self.fmt['END'])
         self.has_END = True
-	#def TER(self):
-	#"""Write the ENDMDL_ record.
- 	#"""
-	#self.pdbfile.write(self.fmt['TER'])
+    
+    def TER(self):
+        """Write the ENDMDL_ record."""
+        self.pdbfile.write(self.fmt['TER'])
     
 
-	#def ENDMDL(self):
-	#"""Write the ENDMDL_ record.
-
-	#"""
-	#self.pdbfile.write(self.fmt['ENDMDL'])
+    def ENDMDL(self):
+        """Write the ENDMDL_ record."""
+        self.pdbfile.write(self.fmt['ENDMDL'])
 
     def CONECT(self, conect):
         """Write CONECT_ record.
