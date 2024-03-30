@@ -1327,12 +1327,11 @@ class PDBWriter(base.WriterBase):
 	#self.pdbfile.write(self.fmt['TER'])
     
 
-
 	def ENDMDL(self):
-        """Write the ENDMDL_ record.
+	"""Write the ENDMDL_ record.
 
-        """
-        self.pdbfile.write(self.fmt['ENDMDL'])
+	"""
+	self.pdbfile.write(self.fmt['ENDMDL'])
 
     def CONECT(self, conect):
         """Write CONECT_ record.
