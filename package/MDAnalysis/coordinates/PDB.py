@@ -1240,11 +1240,14 @@ class PDBWriter(base.WriterBase):
 
             # record_type attribute, if exists, can be ATOM or HETATM
             try:
-                if vals['chainID'] == chainids[i+1] and record_types[i] == "ATOM":
+                if record_types[i] == "ATOM":
+                        
+            
+                        if vals['chainID'] != chainids[i+1] or record_types[i+1] == "HETATOM" or i == len(atoms)-1:
+                            self.TER()
+                        else:
+                            self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
 
-                        self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
-                elif vals['chainID'] != chainids[i+1] and record_types[i] == "ATOM" :
-                    self.TER()
                 else:
                     self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
             except KeyError:
@@ -1333,7 +1336,7 @@ class PDBWriter(base.WriterBase):
     
     def TER(self):
         """Write the ENDMDL_ record."""
-        self.pdbfile.write(self.fmt['TER'])
+        self.pdbfile.write(self.fmt['TER'].format(**vals))
     
 
     def ENDMDL(self):
