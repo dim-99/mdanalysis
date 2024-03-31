@@ -592,7 +592,8 @@ class PDBWriter(base.WriterBase):
         'TITLE': "TITLE     {0}\n",
         'MODEL': "MODEL     {0:>4d}\n",
         'NUMMDL': "NUMMDL    {0:5d}\n",
-        'TER' : "TER\n",
+        'TER' : ("TER  {serial:5d} {name:<4s}{altLoc:<1s}{resName:<4s}"
+            "{chainID:1s}{resSeq:4d}{iCode:1s}\n"),
 	    'ENDMDL': "ENDMDL\n",
         'END': "END\n",
         'CRYST1': ("CRYST1{box[0]:9.3f}{box[1]:9.3f}{box[2]:9.3f}"
@@ -1239,13 +1240,18 @@ class PDBWriter(base.WriterBase):
 
             # record_type attribute, if exists, can be ATOM or HETATM
             try:
-                self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
+                if vals['chainID'] == chainids[i+1] and record_types[i] == "ATOM":
+
+                        self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
+                elif vals['chainID'] != chainids[i+1] and record_types[i] == "ATOM" :
+                    self.TER()
+                else:
+                    self.pdbfile.write(self.fmt[record_types[i]].format(**vals))
             except KeyError:
                 errmsg = (f"Found {record_types[i]} for the record type, but "
                           f"only allowed types are ATOM or HETATM")
                 raise ValueError(errmsg) from None
-            if vals['chainID'] != chainids[i-1]:
-                self.TER()
+            
 
         if multiframe:
             self.ENDMDL()
