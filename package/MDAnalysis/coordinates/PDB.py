@@ -592,8 +592,8 @@ class PDBWriter(base.WriterBase):
         'TITLE': "TITLE     {0}\n",
         'MODEL': "MODEL     {0:>4d}\n",
         'NUMMDL': "NUMMDL    {0:5d}\n",
-        'TER:"TER\n",
-	'ENDMDL': "ENDMDL\n",
+        'TER' : "TER\n",
+	    'ENDMDL': "ENDMDL\n",
         'END': "END\n",
         'CRYST1': ("CRYST1{box[0]:9.3f}{box[1]:9.3f}{box[2]:9.3f}"
                    "{ang[0]:7.2f}{ang[1]:7.2f}{ang[2]:7.2f} "
